@@ -28,7 +28,7 @@
                 formData.append("image", $("#imgCapture").attr("src"));
                 formData.append("branchid", "27");
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/WebCheckinApi.aspx", false);
+                xhr.open("POST", "http://test.innfinitcrs.co.in/WebCheckinApi.aspx", false);
                 xhr.addEventListener("load", function (evt) {
                     if (evt.target.status == 200) {
                         var response = JSON.parse(evt.target.response);
