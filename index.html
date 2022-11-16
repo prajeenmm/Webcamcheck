@@ -21,18 +21,21 @@
                 });
             });
             $("#btnUpload").click(function () {
+                var posturl = getParameterByName("posturl");
+                var branchid = getParameterByName("branchid");
                 var formData = new FormData();
                 formData.append("option", "CaptureImages");
                 formData.append("type", "upd_photo");
                 formData.append("image", $("#imgCapture").attr("src"));
-                formData.append("branchid", "27");
+                formData.append("branchid", branchid);
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "WebCheckinApi.aspx", false);
+                xhr.open("POST", posturl, false);
                 xhr.addEventListener("load", function (evt) {
                     if (evt.target.status == 200) {
                         var response = JSON.parse(evt.target.response);
                         if (response["FileName"]) {
-                            $el.attr("data-image-filename", response["FileName"]);
+                            //parent.IframeCallback(response["FileName"])
+                            alert(response["FileName"]);
                         }
                         else {
                             alert("Error Uploading Image");
@@ -48,6 +51,17 @@
                 xhr.send(formData);
             });
         });
+        function getParameterByName(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
     </script>
     <style>
         .upload-details { text-align: center; }
